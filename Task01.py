@@ -13,6 +13,7 @@ from sys import platform
 import os
 from random import randint
 
+
 def clear_console():
 
     if 'win' in platform:
@@ -21,8 +22,9 @@ def clear_console():
         os.system('clear')
 
 
-def show_status(candy_amount):
+def show_status(candy_amount, candy_max):
     print(f'Сейчас на столе {candy_amount} конфет')
+    print(f'За один ход можно брать не больше {candy_max} конфет')
 
 
 def gamer_move(gamer_name):
@@ -34,21 +36,22 @@ clear_console()
 start_candy = int(input('Введите исходное количество конфет: '))
 clear_console()
 current_candy = start_candy
-
-current_gamer = randint(1,2)
+limit_to_take = 28
+current_gamer = randint(1, 2)
 print(f'Первым ходит игрок {current_gamer}')
 
 while current_candy > 0:
-    show_status(current_candy)
+    current_limit = limit_to_take if limit_to_take < current_candy else current_candy
+    show_status(current_candy, current_limit)
     candy_dec = gamer_move(current_gamer)
-    if candy_dec > current_candy:
+    if candy_dec > current_candy or candy_dec > limit_to_take:
         clear_console()
         print('Перебор! Берите меньше')
     else:
         clear_console()
         current_candy -= candy_dec
         if current_candy == 0:
-            print(f'Игрок {current_gamer} выиграл')
+            print(f'Игрок {current_gamer} выиграл!')
         elif current_gamer == 1:
             current_gamer = 2
         elif current_gamer == 2:
