@@ -9,6 +9,7 @@
 # a) Добавьте игру против бота
 
 # b) Подумайте как наделить бота 'интеллектом'
+
 from sys import platform
 import os
 from random import randint
@@ -32,18 +33,41 @@ def gamer_move(gamer_name):
     return gamer_candy
 
 
+def bot_move(candy_on_table, candy_max):
+    if candy_on_table <= candy_max:
+        bot_takes = candy_on_table
+    elif candy_on_table % candy_max > 1:
+        bot_takes = candy_on_table % candy_max-1
+    else:
+        bot_takes = 1
+    return bot_takes
+
+
 clear_console()
+
 start_candy = int(input('Введите исходное количество конфет: '))
+
 clear_console()
 current_candy = start_candy
 limit_to_take = 28
-current_gamer = randint(1, 2)
+if randint(1, 2) == 1:
+    current_gamer = 'Бот'
+else:
+    current_gamer = 'Человек'
+
 print(f'Первым ходит игрок {current_gamer}')
+
 
 while current_candy > 0:
     current_limit = limit_to_take if limit_to_take < current_candy else current_candy
     show_status(current_candy, current_limit)
-    candy_dec = gamer_move(current_gamer)
+    bot_move(current_candy, limit_to_take)
+    if current_gamer == 'Бот':
+        candy_dec = bot_move(current_candy, limit_to_take)
+        print(f'Бот забрал {candy_dec} конфет')
+        input()
+    else:
+        candy_dec = gamer_move(current_gamer)
     if candy_dec > current_candy or candy_dec > limit_to_take:
         clear_console()
         print('Перебор! Берите меньше')
@@ -52,7 +76,7 @@ while current_candy > 0:
         current_candy -= candy_dec
         if current_candy == 0:
             print(f'Игрок {current_gamer} выиграл!')
-        elif current_gamer == 1:
-            current_gamer = 2
-        elif current_gamer == 2:
-            current_gamer = 1
+        elif current_gamer == 'Бот':
+            current_gamer = 'Человек'
+        elif current_gamer == 'Человек':
+            current_gamer = 'Бот'
