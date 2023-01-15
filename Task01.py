@@ -9,10 +9,12 @@
 # a) Добавьте игру против бота
 
 # b) Подумайте как наделить бота 'интеллектом'
+from sys import platform
+import os
+from random import randint
 
 def clear_console():
-    from sys import platform
-    import os
+
     if 'win' in platform:
         os.system('CLS')
     elif 'lin' in platform:
@@ -24,7 +26,7 @@ def show_status(candy_amount):
 
 
 def gamer_move(gamer_name):
-    gamer_candy = int(input('Игрок {gamer_name}, Сколько конфет возьмёте? '))
+    gamer_candy = int(input(f'Игрок {gamer_name}, Сколько конфет возьмёте? '))
     return gamer_candy
 
 
@@ -32,19 +34,22 @@ clear_console()
 start_candy = int(input('Введите исходное количество конфет: '))
 clear_console()
 current_candy = start_candy
-show_status(current_candy)
-current_gamer = 1
 
+current_gamer = randint(1,2)
+print(f'Первым ходит игрок {current_gamer}')
 
 while current_candy > 0:
-    candy_dec = gamer_move(current_gamer)
-    clear_console()
-    current_candy -= candy_dec
     show_status(current_candy)
-
-    if current_candy == 0:
-        print(f'Игрок {current_gamer} выиграл')
-    elif current_gamer == 1:
-        current_gamer = 2
-    elif current_gamer == 2:
-        current_gamer = 1
+    candy_dec = gamer_move(current_gamer)
+    if candy_dec > current_candy:
+        clear_console()
+        print('Перебор! Берите меньше')
+    else:
+        clear_console()
+        current_candy -= candy_dec
+        if current_candy == 0:
+            print(f'Игрок {current_gamer} выиграл')
+        elif current_gamer == 1:
+            current_gamer = 2
+        elif current_gamer == 2:
+            current_gamer = 1
