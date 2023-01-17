@@ -37,9 +37,6 @@ def gamer_move(local_gamer, local_sign):
             f'Игрок {local_gamer} куда поставите {local_sign}? ')
         if gamer_place.isdigit():
             return int(gamer_place)
-    # else:
-    #     gamer_place = int(
-    #     input(f'Игрок {local_gamer} куда поставите {local_sign}? '))
 
 
 def field_is_full(local_field):
@@ -87,20 +84,6 @@ def change_gamer(local_gamer):
     else:
         local_gamer = gamer_1_name
     return local_gamer
-
-
-# def move_possible(place):
-#     for row in field:
-#         if place in row:
-#             return True
-#     return False
-
-
-# def make_move(local_field, place):
-#     for row in local_field:
-#         if place in row:
-#             rep
-#     return False
 
 
 field = {

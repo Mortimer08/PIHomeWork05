@@ -29,7 +29,11 @@ def show_status(candy_amount, candy_max):
 
 
 def gamer_move(gamer_name):
-    gamer_candy = int(input(f'Игрок {gamer_name}, Сколько конфет возьмёте? '))
+    while True:        
+        gamer_candy_str = input(f'Игрок {gamer_name}, Сколько конфет возьмёте? ')
+        if gamer_candy_str.isdigit():
+            break
+    gamer_candy = int(gamer_candy_str)
     return gamer_candy
 
 
