@@ -8,7 +8,11 @@ def input_string():
     return local_string
 
 def decompress(string_to_decompress):
-    pass
+    decompressed_string = ''
+    for i in range(len(string_to_decompress)):
+        if string_to_decompress[i].isdigit():
+            decompressed_string += string_to_decompress[i+1]*int(string_to_decompress[i])
+    return decompressed_string
 
 def compress(string_to_compress):
     compressed_string = ''
@@ -31,7 +35,11 @@ initial_string = input_string()
 
 
 if initial_string[0].isdigit():
-    decompress(initial_string)
+    target_string = decompress(initial_string)
+    print('Востановленная строка:')
+    print(target_string)
+
 else:
     target_string = compress(initial_string)
+    print('Сжатая строка:')
     print(target_string)
