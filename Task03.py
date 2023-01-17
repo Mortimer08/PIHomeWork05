@@ -3,9 +3,11 @@
 # aaaaabbbcccc -> 5a3b4c
 # 5a3b4c -> aaaaabbbcccc
 
+
 def input_string():
     local_string = input('Введите текст: ')
     return local_string
+
 
 def decompress(string_to_decompress):
     decompressed_string = ''
@@ -31,15 +33,23 @@ def compress(string_to_compress):
     compressed_string += compressed_part
     return compressed_string
 
-initial_string = input_string()
-
+f = open('Text2.txt', 'r')
+initial_string = f.read()
+f.close()
 
 if initial_string[0].isdigit():
     target_string = decompress(initial_string)
     print('Востановленная строка:')
     print(target_string)
-
+    path1_1 = 'Text1_1.txt'
+    f = open(path1_1,'w')
+    f.write(target_string)
+    f.close()
 else:
     target_string = compress(initial_string)
     print('Сжатая строка:')
     print(target_string)
+    path2_1 = 'Text2_1.txt'
+    f = open(path2_1,'w')
+    f.write(target_string)
+    f.close()
