@@ -11,6 +11,7 @@ gamer_2_name = '2'
 sing_1_name = 'X'
 sing_2_name = 'O'
 
+
 def clear_console():
 
     if 'win' in platform:
@@ -32,13 +33,13 @@ def show_field(local_field):
 
 def gamer_move(local_gamer, local_sign):
     while True:
-        gamer_place = input(f'Игрок {local_gamer} куда поставите {local_sign}? ')
+        gamer_place = input(
+            f'Игрок {local_gamer} куда поставите {local_sign}? ')
         if gamer_place.isdigit():
             return int(gamer_place)
     # else:
     #     gamer_place = int(
     #     input(f'Игрок {local_gamer} куда поставите {local_sign}? '))
-
 
 
 def field_is_full(local_field):
@@ -47,11 +48,30 @@ def field_is_full(local_field):
             return False
     return True
 
+
 def move_is_possible(local_move):
     if str(move).isdigit() and move > 0 and move < 10 and str(move) in field.values():
         return True
     else:
         return False
+
+
+def sing_wins(local_field, local_sign):
+    local_vertical_1 = local_field[1] == local_sign and local_field[4] == local_sign and local_field[7] == local_sign
+    local_vertical_2 = local_field[2] == local_sign and local_field[5] == local_sign and local_field[8] == local_sign
+    local_vertical_3 = local_field[3] == local_sign and local_field[6] == local_sign and local_field[9] == local_sign
+    local_gorizontal_1 = local_field[1] == local_sign and local_field[2] == local_sign and local_field[3] == local_sign
+    local_gorizontal_2 = local_field[4] == local_sign and local_field[5] == local_sign and local_field[6] == local_sign
+    local_gorizontal_3 = local_field[7] == local_sign and local_field[8] == local_sign and local_field[9] == local_sign
+    local_diagonal_1 = local_field[1] == local_sign and local_field[5] == local_sign and local_field[9] == local_sign
+    local_diagonal_2 = local_field[3] == local_sign and local_field[5] == local_sign and local_field[7] == local_sign
+    if local_vertical_1 or local_vertical_2 or local_vertical_3 \
+        or local_gorizontal_1 or local_gorizontal_2 or local_gorizontal_3 \
+            or local_diagonal_1 or local_diagonal_2:
+        return True
+    else:
+        return False
+
 
 def change_sign(local_sign):
     if local_sign == sing_1_name:
@@ -59,6 +79,7 @@ def change_sign(local_sign):
     else:
         local_sign = sing_1_name
     return local_sign
+
 
 def change_gamer(local_gamer):
     if local_gamer == gamer_1_name:
@@ -97,17 +118,21 @@ clear_console()
 
 while not field_is_full(field):
 
-
     show_field(field)
-
+    
     move = gamer_move(current_gamer, current_sign)
     clear_console()
     if move_is_possible(move):
         field[move] = current_sign
+        if sing_wins(field, current_sign):
+            show_field(field)
+            print(f'Игрок {current_gamer} ({current_sign}) выиграл!')
+            break
         current_sign = change_sign(current_sign)
         current_gamer = change_gamer(current_gamer)
     else:
         print('Такой ход недопустим!')
         print()
+
 
 print('Игра закончена!')
