@@ -33,7 +33,7 @@ def compress(string_to_compress):
     compressed_string += compressed_part
     return compressed_string
 
-f = open('Text2.txt', 'r')
+f = open('Text1.txt', 'r')
 initial_string = f.read()
 f.close()
 
